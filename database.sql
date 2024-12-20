@@ -1,0 +1,2 @@
+ALTER TABLE article
+ADD COLUMN views INT DEFAULT 0; 
