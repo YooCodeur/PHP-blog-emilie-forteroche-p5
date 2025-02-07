@@ -25,8 +25,11 @@
             <?php 
                 // Si on est connecté, on affiche le bouton Admin et le bouton de déconnexion
                 if (isset($_SESSION['user'])) {
-                    echo '<a href="index.php?action=admin">Admin</a>';
+                    echo '<a href="index.php?action=monitoring">Admin</a>';
                     echo '<a href="index.php?action=disconnectUser">Déconnexion</a>';
+                } else {
+                    // Si on n'est pas connecté, on affiche le bouton de connexion
+                    echo '<a href="index.php?action=connectionForm">Connexion</a>';
                 }
             ?>
         </nav>

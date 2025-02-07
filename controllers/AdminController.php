@@ -79,8 +79,8 @@ class AdminController {
         $_SESSION['user'] = $user;
         $_SESSION['idUser'] = $user->getId();
 
-        // On redirige vers la page d'administration.
-        Utils::redirect("admin");
+        // On redirige vers la page de monitoring.
+        Utils::redirect("monitoring");
     }
 
     /**
@@ -154,8 +154,8 @@ class AdminController {
         $articleManager = new ArticleManager();
         $articleManager->addOrUpdateArticle($article);
 
-        // On redirige vers la page d'administration.
-        Utils::redirect("admin");
+        // On redirige vers la page de monitoring.
+        Utils::redirect("monitoring");
     }
 
     /**
@@ -215,9 +215,7 @@ class AdminController {
      */
     public function getArticleComments() : void
     {
-        // Désactiver la sortie du tampon
-        ob_clean();
-        
+       
         // Log pour le débogage
         error_log("Début getArticleComments");
         
@@ -272,8 +270,7 @@ class AdminController {
      */
     public function deleteComment() : void
     {
-        // Désactiver la sortie du tampon
-        ob_clean();
+       
         
         header('Content-Type: application/json');
         

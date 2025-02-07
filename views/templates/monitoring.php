@@ -4,277 +4,203 @@
     <meta charset="UTF-8">
     <title>Monitoring des articles</title>
     <style>
-        .monitoring-container {
-            padding: 20px;
-            max-width: 1366px;
-            margin: 0 auto;
+        body {
+            background: #efe1ba;
+            font-family: Times New Roman, serif;
         }
-        
+
+        .monitoring-container {
+            width: 95%;
+            margin: 20px auto;
+            border: 2px solid #255e33;
+        }
+
+        h1, h2, h3 {
+            color: #255e33;
+            text-align: center;
+            font-family: Times New Roman, serif;
+            margin: 10px 0;
+            padding: 10px;
+            background: #efe1ba;
+            border-bottom: 2px solid #255e33;
+        }
+        h1 {
+            color: #f13c1f;
+            text-align: center;
+            font-family: 'Qwitcher Grypen', cursive;
+            margin: 10px 0;
+            padding: 10px;
+            background: #efe1ba;
+            border-bottom: 2px solid #255e33;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            margin: 20px 0;
         }
-        
-        th, td {
+
+        .stats-card table thead th,
+        .stats-card table thead th a {
+            background-color: #255e33 !important;
+            color: #fff !important;
+            font-weight: bold;
             padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+            text-align: center;
+            border: none;
         }
-        
-        th {
-            background-color: #f8f9fa;
-            position: relative;
+
+        .stats-card table thead th:hover,
+        .stats-card table thead th a:hover {
+            background-color: #1a4024 !important;
         }
-        
-        th a {
-            color: #333;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            position: relative;
-            padding: 5px 0;
-        }
-        
-        th a::before {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 6px 12px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: normal;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            z-index: 1000;
-        }
-        
-        th a::after {
-            content: '';
-            position: absolute;
-            bottom: calc(100% + 4px);
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 6px;
-            border-style: solid;
-            border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            z-index: 1000;
-        }
-        
-        th:hover a::before,
-        th:hover a::after {
-            opacity: 1;
-            visibility: visible;
-        }
+
+        /* Suppression des autres styles qui peuvent entrer en conflit */
       
-        .sort-arrow {
-            margin-left: 5px;
-            display: inline-block;
-            width: 0;
-            height: 0;
-            vertical-align: middle;
+
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #255e33;
         }
-        
-        .sort-arrow.asc {
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-bottom: 4px solid #333;
-        }
-        
-        .sort-arrow.desc {
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 4px solid #333;
-        }
-        
+
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background: #efe1ba;
         }
-        
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-        
+
         .stats-summary {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 15px;
+            background: #efe1ba;
+            border-bottom: 2px solid #255e33;
         }
-        
+
         .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            border: 1px solid #255e33;
+            padding: 15px;
+            text-align: center;
+            background: #fff;
         }
-        
-        .stat-card h3 {
-            margin: 0 0 10px 0;
-            color: #666;
-        }
-        
+
         .stat-value {
             font-size: 24px;
+            color: #255e33;
             font-weight: bold;
-            color: #333;
         }
-        
-        /* Styles pour la gestion des commentaires */
+
+        .actions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 200px;
+        }
+
+        .show-comments, .submit {
+            background: #255e33;
+            color: #fff;
+            border: 1px solid #1a4024;
+            padding: 8px 10px;
+            cursor: pointer;
+            font-family: Times New Roman, serif;
+            text-decoration: none;
+            display: block;
+            margin: 2px 0;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .show-comments:hover, .submit:hover {
+            background: #1a4024;
+            color: #fff;
+            transform: scale(1.02);
+        }
+
         .comments-panel {
             display: none;
-            background: #f8f9fa;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 4px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            padding: 10px;
+            margin: 10px;
+            background: #efe1ba;
+            border: 1px solid #255e33;
         }
-        
+
         .comments-panel.active {
             display: block;
         }
-        
+
         .comment-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: #fff;
             padding: 10px;
             margin: 5px 0;
-            background: white;
-            border-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            border: 1px solid #255e33;
         }
-        
-        .comment-content {
-            flex-grow: 1;
-            margin-right: 15px;
-        }
-        
+
         .comment-meta {
-            font-size: 0.9em;
-            color: #666;
+            color: #255e33;
+            font-style: italic;
             margin-bottom: 5px;
         }
-        
+
         .comment-text {
             color: #333;
+            margin: 5px 0;
         }
-        
+
         .delete-comment {
-            padding: 5px 10px;
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 4px;
+            background: #255e33;
+            color: #fff;
+            border: 1px solid #1a4024;
+            padding: 3px 8px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            font-family: Times New Roman, serif;
+            font-weight: bold;
         }
-        
+
         .delete-comment:hover {
-            background-color: #c82333;
+            background: #1a4024;
         }
-        
-        .show-comments {
-            padding: 5px 10px;
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-right: 10px;
-        }
-        
-        .show-comments:hover {
-            background-color: #5a6268;
-        }
-        
-        .no-comments {
-            color: #666;
-            font-style: italic;
-            padding: 10px;
-        }
-        
-        /* Animation pour le panneau de commentaires */
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .comments-panel.active {
-            animation: slideDown 0.3s ease-out;
-        }
-        
-        .comments-list {
-            margin-top: 10px;
-        }
-        .comment {
-            background: #f5f5f5;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .comment-header {
-            color: #666;
-            margin-bottom: 5px;
-        }
-        .comment-content {
-            margin: 10px 0;
-        }
-        .comment-actions {
-            text-align: right;
-        }
-        .delete-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .delete-btn:hover {
-            background: #c82333;
-        }
-        .loading {
+
+        .loading, .error, .no-comments {
+            color: #255e33;
             text-align: center;
-            padding: 20px;
-            color: #666;
-        }
-        .error {
-            color: #dc3545;
             padding: 10px;
-            text-align: center;
-        }
-        .no-comments {
-            text-align: center;
-            padding: 20px;
-            color: #666;
             font-style: italic;
         }
-        
-        /* Pour s'assurer que les boutons s'alignent correctement */
-        .show-comments, .submit {
+
+        a {
+            color: #255e33;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #1a4024;
+        }
+
+        th a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            font-weight: bold;
+        }
+
+        th a:hover {
+            color: #efe1ba;
+            background: #1a4024;
+            transition: all 0.3s ease;
+        }
+
+        .sort-arrow {
             display: inline-block;
-            vertical-align: middle;
-            margin: 10px 0;
+            margin-left: 5px;
+            color: #fff;
         }
     </style>
 </head>
 <body>
     <div class="monitoring-container">
-        <h1>Tableau de bord</h1>
+        <h2>Tableau de bord</h2>
         
         <div class="stats-summary">
             <div class="stat-card">
@@ -328,7 +254,7 @@
                                     </a>
                                 </th>
                             <?php } ?>
-                            <th>Actions</th>
+                         
                         </tr>
                     </thead>
                     <tbody>
@@ -339,12 +265,17 @@
                             <td><?= $article['comment_count'] ?></td>
                             <td><?= (new DateTime($article['created_at']))->format('d/m/Y') ?></td>
                             <td>
-                                <button class="show-comments" onclick="toggleComments(<?= $article['id'] ?>)">
-                                    Voir les commentaires
-                                </button>
-                                <a href="index.php?action=showUpdateArticleForm&id=<?= $article['id'] ?>" class="submit">
-                                    Modifier
-                                </a>
+                                <div class="actions-container">
+                                    <button class="show-comments" onclick="toggleComments(<?= $article['id'] ?>)">
+                                        Voir les commentaires
+                                    </button>
+                                    <a href="index.php?action=showUpdateArticleForm&id=<?= $article['id'] ?>" class="submit">
+                                        Modifier
+                                    </a>
+                                    <a class="submit" href="index.php?action=deleteArticle&id=<?= $article['id'] ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">
+                                        Supprimer
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         <tr>
