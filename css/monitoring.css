@@ -1,0 +1,243 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'arial', sans-serif;
+    background-color: var(--backgroundColor);
+}
+
+h1, h2, h3 {
+    color: #255e33;
+    text-align: center;
+    font-family: 'arial', sans-serif;
+    margin: 10px 0;
+    padding: 10px;
+    background: #efe1ba;
+    border-bottom: 2px solid #255e33;
+}
+
+h1 {
+    color: #f13c1f;
+    text-align: center;
+    font-family: 'Qwitcher Grypen', cursive;
+    margin: 10px 0;
+    padding: 10px;
+    background: #efe1ba;
+    border-bottom: 2px solid #255e33;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.stats-card table thead th,
+.stats-card table thead th a {
+    background-color: #255e33 !important;
+    color: #fff !important;
+    font-weight: bold;
+    padding: 15px;
+    text-align: center;
+    border: none;
+}
+
+
+td {
+    padding: 8px;
+    border-bottom: 1px solid #255e33;
+}
+
+tr:nth-child(even) {
+    background: #efe1ba;
+}
+
+.stats-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 15px;
+    background: #efe1ba;
+    border-bottom: 2px solid #255e33;
+}
+
+.stat-card {
+    border: 1px solid #255e33;
+    padding: 15px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 24px;
+    color: #255e33;
+    font-weight: bold;
+}
+
+.actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 200px;
+}
+
+.show-comments, .submit {
+    background: #255e33;
+    color: #fff;
+    border: 1px solid #1a4024;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-family: 'arial', sans-serif;
+    text-decoration: none;
+    display: block;
+    margin: 2px 0;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.show-comments:hover, .submit:hover {
+    background: #1a4024;
+    color: #fff;
+    transform: scale(1.02);
+}
+
+.comments-panel {
+    display: none;
+    background: #efe1ba;
+}
+
+tr.comments-row {
+    display: none;
+}
+
+/* Affiche la ligne quand le panneau est actif */
+tr.comments-row.active {
+    display: table-row;
+}
+
+.comments-panel.active {
+    display: block;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.comment-actions button {
+    background: #255e33;
+    color: #fff;
+    border: 1px solid #1a4024;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-family: 'arial', sans-serif;
+    text-decoration: none;
+    display: block;
+    margin: 2px 0;
+    width: 15%;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.comment-item {
+    background: #fff;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #255e33;
+}
+
+.comment-meta {
+    color: #255e33;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+.comment-text {
+    color: #333;
+    margin: 5px 0;
+}
+
+.delete-comment {
+    background: #255e33;
+    color: #fff;
+    border: 1px solid #1a4024;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-family: 'arial', sans-serif;
+    font-weight: bold;
+}
+
+.delete-comment:hover {
+    background: #1a4024;
+}
+
+.loading, .error, .no-comments {
+    color: #255e33;
+    text-align: center;
+    padding: 10px;
+    font-style: italic;
+}
+
+/* Styles pour les tooltips */
+th a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+    position: relative;
+}
+
+th a:hover {
+    color: #efe1ba;
+    background: #1a4024;
+    transition: all 0.3s ease;
+}
+
+/* Affichage du tooltip */
+th a::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 10px;
+    background: #255e33;
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+/* Petite flèche du tooltip */
+th a::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #255e33 transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+/* Affichage du tooltip au survol */
+th a:hover::after,
+th a:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sort-arrow {
+    display: inline-block;
+    margin-left: 5px;
+    color: #fff;
+} 

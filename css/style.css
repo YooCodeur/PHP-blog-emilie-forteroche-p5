@@ -154,6 +154,29 @@ header > nav > a {
     text-transform: uppercase;
     font-size: 16px;
     color: white;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+header > nav > a.active {
+    position: relative;
+    color: white;
+    font-weight: bold;
+}
+
+header > nav > a.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    background-color: var(--backgroundColor);
+    border-radius: 3px 3px 0 0;
+}
+
+header > nav > a:hover {
+    color: var(--backgroundColor);
 }
 
 /**
@@ -310,6 +333,7 @@ a.info {
 .adminArticle {
     margin-bottom: 20px;
     background-color: var(--commentPaleColor);
+    color: white;
 }
 
 .articleLine {
@@ -348,7 +372,6 @@ footer {
 }
 
 .monitoring-container {
-    background-color: #99a140;
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
@@ -361,14 +384,15 @@ footer {
 }
 
 .stats-card {
+    background: #99a140;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
-.articleLine > div {
-    border: none;   
-}
+ .articleLine > div {
+       border: none; /* Supprime toute bordure */
+       /* Ajoutez d'autres styles ici si nécessaire */
+   }
 .stats-card h2 {
     margin-bottom: 15px;
     color: #333;
@@ -379,18 +403,13 @@ footer {
     border-collapse: collapse;
 }
 
-.stats-card th, 
-.stats-card td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-}
+
 
 .stats-card th {
-    background-color: #255e33;
+    background-color: #f5f5f5;
     font-weight: bold;
 }
 
 .stats-card tr:hover {
-    background-color: #99a140;
+    background-color: #f9f9f9;
 }

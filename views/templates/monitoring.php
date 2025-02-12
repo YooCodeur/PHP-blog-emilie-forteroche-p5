@@ -3,200 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Monitoring des articles</title>
-    <style>
-        body {
-            background: #efe1ba;
-            font-family: Times New Roman, serif;
-        }
-
-        .monitoring-container {
-            width: 95%;
-            margin: 20px auto;
-            border: 2px solid #255e33;
-        }
-
-        h1, h2, h3 {
-            color: #255e33;
-            text-align: center;
-            font-family: Times New Roman, serif;
-            margin: 10px 0;
-            padding: 10px;
-            background: #efe1ba;
-            border-bottom: 2px solid #255e33;
-        }
-        h1 {
-            color: #f13c1f;
-            text-align: center;
-            font-family: 'Qwitcher Grypen', cursive;
-            margin: 10px 0;
-            padding: 10px;
-            background: #efe1ba;
-            border-bottom: 2px solid #255e33;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        .stats-card table thead th,
-        .stats-card table thead th a {
-            background-color: #255e33 !important;
-            color: #fff !important;
-            font-weight: bold;
-            padding: 15px;
-            text-align: center;
-            border: none;
-        }
-
-        .stats-card table thead th:hover,
-        .stats-card table thead th a:hover {
-            background-color: #1a4024 !important;
-        }
-
-        /* Suppression des autres styles qui peuvent entrer en conflit */
-      
-
-        td {
-            padding: 8px;
-            border-bottom: 1px solid #255e33;
-        }
-
-        tr:nth-child(even) {
-            background: #efe1ba;
-        }
-
-        .stats-summary {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            padding: 15px;
-            background: #efe1ba;
-            border-bottom: 2px solid #255e33;
-        }
-
-        .stat-card {
-            border: 1px solid #255e33;
-            padding: 15px;
-            text-align: center;
-            background: #fff;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            color: #255e33;
-            font-weight: bold;
-        }
-
-        .actions-container {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            width: 200px;
-        }
-
-        .show-comments, .submit {
-            background: #255e33;
-            color: #fff;
-            border: 1px solid #1a4024;
-            padding: 8px 10px;
-            cursor: pointer;
-            font-family: Times New Roman, serif;
-            text-decoration: none;
-            display: block;
-            margin: 2px 0;
-            width: 100%;
-            text-align: center;
-            box-sizing: border-box;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .show-comments:hover, .submit:hover {
-            background: #1a4024;
-            color: #fff;
-            transform: scale(1.02);
-        }
-
-        .comments-panel {
-            display: none;
-            padding: 10px;
-            margin: 10px;
-            background: #efe1ba;
-            border: 1px solid #255e33;
-        }
-
-        .comments-panel.active {
-            display: block;
-        }
-
-        .comment-item {
-            background: #fff;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #255e33;
-        }
-
-        .comment-meta {
-            color: #255e33;
-            font-style: italic;
-            margin-bottom: 5px;
-        }
-
-        .comment-text {
-            color: #333;
-            margin: 5px 0;
-        }
-
-        .delete-comment {
-            background: #255e33;
-            color: #fff;
-            border: 1px solid #1a4024;
-            padding: 3px 8px;
-            cursor: pointer;
-            font-family: Times New Roman, serif;
-            font-weight: bold;
-        }
-
-        .delete-comment:hover {
-            background: #1a4024;
-        }
-
-        .loading, .error, .no-comments {
-            color: #255e33;
-            text-align: center;
-            padding: 10px;
-            font-style: italic;
-        }
-
-        a {
-            color: #255e33;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #1a4024;
-        }
-
-        th a {
-            color: #fff;
-            text-decoration: none;
-            display: block;
-            font-weight: bold;
-        }
-
-        th a:hover {
-            color: #efe1ba;
-            background: #1a4024;
-            transition: all 0.3s ease;
-        }
-
-        .sort-arrow {
-            display: inline-block;
-            margin-left: 5px;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="css/monitoring.css">
+    <link href="https://fonts.googleapis.com/css2?family=Qwitcher+Grypen:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="monitoring-container">
@@ -278,7 +86,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="comments-row" id="comments-row-<?= $article['id'] ?>">
                             <td colspan="5">
                                 <div id="comments-<?= $article['id'] ?>" class="comments-panel">
                                     <?php if (isset($article['comments']) && !empty($article['comments'])): ?>
@@ -316,8 +124,13 @@
     <script>
         function toggleComments(articleId) {
             const panel = document.getElementById(`comments-${articleId}`);
+            const row = document.getElementById(`comments-row-${articleId}`);
+            
             if (!panel.classList.contains('active')) {
                 panel.innerHTML = '<div class="loading">Chargement des commentaires...</div>';
+                // Afficher la ligne du tableau
+                row.classList.add('active');
+                
                 // Charger les commentaires via AJAX si pas encore chargés
                 fetch(`index.php?action=getArticleComments&id=${articleId}`)
                     .then(response => {
@@ -331,12 +144,19 @@
                             updateCommentsPanel(articleId, data.comments);
                         } else {
                             panel.innerHTML = `<div class="error">${data.message || 'Erreur lors du chargement des commentaires'}</div>`;
+                            // Cacher la ligne si erreur
+                            row.classList.remove('active');
                         }
                     })
                     .catch(error => {
                         console.error('Erreur:', error);
                         panel.innerHTML = '<div class="error">Erreur lors du chargement des commentaires</div>';
+                        // Cacher la ligne si erreur
+                        row.classList.remove('active');
                     });
+            } else {
+                // Cacher la ligne quand on ferme le panneau
+                row.classList.remove('active');
             }
             panel.classList.toggle('active');
         }
