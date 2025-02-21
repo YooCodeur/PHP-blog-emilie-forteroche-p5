@@ -34,7 +34,7 @@ class Utils {
             $url .= "&$paramName=$paramValue";
         }
         header("Location: $url");
-        exit();
+        return;
     }
 
     /**

@@ -261,7 +261,7 @@ class AdminController {
             error_log("Erreur lors de la récupération des commentaires : " . $e->getMessage());
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
-        exit();
+        return;
     }
     
     /**
@@ -270,8 +270,6 @@ class AdminController {
      */
     public function deleteComment() : void
     {
-       
-        
         header('Content-Type: application/json');
         
         // Vérification de la connexion pour AJAX
@@ -308,6 +306,6 @@ class AdminController {
             error_log("Erreur lors de la suppression du commentaire : " . $e->getMessage());
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
-        exit();
+        return;
     }
 }

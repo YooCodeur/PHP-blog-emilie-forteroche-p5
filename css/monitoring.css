@@ -9,21 +9,18 @@ body {
 h1, h2, h3 {
     color: #255e33;
     text-align: center;
-    font-family: 'arial', sans-serif;
-    margin: 10px 0;
-    padding: 10px;
+    font-family: 'arial', sans-serif;  
     background: #efe1ba;
-    border-bottom: 2px solid #255e33;
 }
 
 h1 {
-    color: #f13c1f;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
     font-family: 'Qwitcher Grypen', cursive;
-    margin: 10px 0;
-    padding: 10px;
-    background: #efe1ba;
-    border-bottom: 2px solid #255e33;
+    font-style: italic;
+    font-size: 80px;
+    color: var(--titleColor);
 }
 
 table {
@@ -202,7 +199,7 @@ th a::after {
     left: 50%;
     transform: translateX(-50%);
     padding: 5px 10px;
-    background: #255e33;
+    background: #255e339f;
     color: white;
     border-radius: 4px;
     font-size: 12px;
